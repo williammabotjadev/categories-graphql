@@ -40,6 +40,20 @@ const resolvers = {
 
 const server = new ApolloServer({typeDefs, resolvers });
 
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+
+const client = new ApolloClient({
+  uri: 'http://localhost:4000',
+  cache: new InMemoryCache(),
+  name: 'react-client',
+  version: '1.0',
+  queryDeduplication: false,
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'cache-and-network',
+    },
+  },
+});
 
 server.listen().then(({ url }) => {
     console.log(`Server running at ${url}`);
